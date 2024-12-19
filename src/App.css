@@ -1,0 +1,22 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+}
+html, body {
+    overflow-x: hidden;
+  }
+.hero {
+    height: auto; /* Responsive height */
+    position: relative;
+   height: 666px;
+  }
+  .img img {
+    object-fit: cover;
+    position: absolute;
+    top: -19px;
+    right: -52px;
+    width: 544px;
+  }
+  
