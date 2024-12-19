@@ -38,41 +38,43 @@ export default function WorkoutSessions() {
 
         {/* عرض البيانات */}
         {!loading && sessions.length > 0 ? (
-          <table className="w-full bg-white rounded-lg shadow-md overflow-hidden">
-            <thead className="bg-blue-500 text-white">
-              <tr>
-                <th className="py-2 px-4 text-left">User Name</th>
-                <th className="py-2 px-4 text-left">Exercise Name</th>
-                <th className="py-2 px-4 text-left">Date</th>
-                <th className="py-2 px-4 text-left">Duration</th>
-                <th className="py-2 px-4 text-left">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sessions.map((session) => (
-                <tr
-                  key={session.id}
-                  className="hover:bg-gray-100 transition duration-200"
-                >
-                  <td className="py-2 px-4">{session.user?.name}</td>
-                  <td className="py-2 px-4">{session.exercise?.name}</td>
-                  <td className="py-2 px-4">
-                    {new Date(session.date).toLocaleDateString()}
-                  </td>
-                  <td className="py-2 px-4">{session.duration} mins</td>
-                  <td
-                    className={`py-2 px-4 ${
-                      session.status === "completed"
-                        ? "text-green-600"
-                        : "text-red-600"
-                    }`}
-                  >
-                    {session.status}
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full bg-white rounded-lg shadow-md overflow-hidden">
+              <thead className="bg-blue-500 text-white">
+                <tr>
+                  <th className="py-2 px-4 text-left">User Name</th>
+                  <th className="py-2 px-4 text-left">Exercise Name</th>
+                  <th className="py-2 px-4 text-left">Date</th>
+                  <th className="py-2 px-4 text-left">Duration</th>
+                  <th className="py-2 px-4 text-left">Status</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {sessions.map((session) => (
+                  <tr
+                    key={session.id}
+                    className="hover:bg-gray-100 transition duration-200"
+                  >
+                    <td className="py-2 px-4">{session.user?.name}</td>
+                    <td className="py-2 px-4">{session.exercise?.name}</td>
+                    <td className="py-2 px-4">
+                      {new Date(session.date).toLocaleDateString()}
+                    </td>
+                    <td className="py-2 px-4">{session.duration} mins</td>
+                    <td
+                      className={`py-2 px-4 ${
+                        session.status === "completed"
+                          ? "text-green-600"
+                          : "text-red-600"
+                      }`}
+                    >
+                      {session.status}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         ) : (
           !loading &&
           sessions.length === 0 && (

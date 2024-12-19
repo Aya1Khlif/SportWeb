@@ -38,33 +38,35 @@ export default function UserProgressPage() {
 
         {/* عرض البيانات */}
         {!loading && progress.length > 0 ? (
-          <table className="w-full bg-white rounded-lg shadow-md overflow-hidden">
-            <thead className="bg-blue-500 text-white">
-              <tr>
-                <th className="py-2 px-4 text-left">User Name</th>
-                <th className="py-2 px-4 text-left">Date</th>
-                <th className="py-2 px-4 text-left">Weight (kg)</th>
-                <th className="py-2 px-4 text-left">Body Fat (%)</th>
-                <th className="py-2 px-4 text-left">Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-              {progress.map((item) => (
-                <tr
-                  key={item.id}
-                  className="hover:bg-gray-100 transition duration-200"
-                >
-                  <td className="py-2 px-4">{item.user?.name}</td>
-                  <td className="py-2 px-4">
-                    {new Date(item.date).toLocaleDateString()}
-                  </td>
-                  <td className="py-2 px-4">{item.weight}</td>
-                  <td className="py-2 px-4">{item.body_fat_percentage}</td>
-                  <td className="py-2 px-4">{item.notes || "N/A"}</td>
+          <div className="overflow-x-auto">
+            <table className="w-full bg-white rounded-lg shadow-md overflow-hidden">
+              <thead className="bg-blue-500 text-white">
+                <tr>
+                  <th className="py-2 px-4 text-left">User Name</th>
+                  <th className="py-2 px-4 text-left">Date</th>
+                  <th className="py-2 px-4 text-left">Weight (kg)</th>
+                  <th className="py-2 px-4 text-left">Body Fat (%)</th>
+                  <th className="py-2 px-4 text-left">Notes</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {progress.map((item) => (
+                  <tr
+                    key={item.id}
+                    className="hover:bg-gray-100 transition duration-200"
+                  >
+                    <td className="py-2 px-4">{item.user?.name}</td>
+                    <td className="py-2 px-4">
+                      {new Date(item.date).toLocaleDateString()}
+                    </td>
+                    <td className="py-2 px-4">{item.weight}</td>
+                    <td className="py-2 px-4">{item.body_fat_percentage}</td>
+                    <td className="py-2 px-4">{item.notes || "N/A"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         ) : (
           !loading &&
           progress.length === 0 && (

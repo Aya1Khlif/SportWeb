@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
-import { getNutritionPlans } from "../services/api";
+import { getUserProgress } from "../services/api";
 
-export default function NutritionPlansPage() {
-  const [plans, setPlans] = useState([]); // تخزين البيانات
+export default function UserProgressPage() {
+  const [progress, setProgress] = useState([]); // تخزين البيانات
   const [loading, setLoading] = useState(true); // حالة التحميل
   const [error, setError] = useState(null); // حالة الخطأ
 
   // جلب البيانات عند تحميل الصفحة
   useEffect(() => {
-    getNutritionPlans()
+    getUserProgress()
       .then((response) => {
-        setPlans(response.data); // ضبط بيانات الخطط الغذائية
+        setProgress(response.data); // ضبط بيانات التقدم
         setLoading(false); // إيقاف التحميل
       })
       .catch((err) => {
         console.error(err);
-        setError("Failed to load nutrition plans.");
+        setError("Failed to load user progress.");
         setLoading(false);
       });
   }, []);
@@ -24,8 +24,8 @@ export default function NutritionPlansPage() {
     <div className="min-h-screen bg-gray-100 py-8">
       <div className="container mx-auto px-4">
         {/* عنوان الصفحة */}
-        <h1 className="text-3xl font-bold text-center text-blue-900 mb-6">
-          Nutrition Plans
+        <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">
+          User Progress
         </h1>
 
         {/* حالة التحميل */}
@@ -37,39 +37,41 @@ export default function NutritionPlansPage() {
         {error && <p className="text-center text-red-500 text-lg">{error}</p>}
 
         {/* عرض البيانات */}
-        {!loading && plans.length > 0 ? (
-          <table className="w-full bg-white rounded-lg shadow-md overflow-hidden">
-            <thead className="bg-blue-700 text-white">
-              <tr>
-                <th className="py-2 px-4 text-left">User Name</th>
-                <th className="py-2 px-4 text-left">Calories</th>
-                <th className="py-2 px-4 text-left">Protein (g)</th>
-                <th className="py-2 px-4 text-left">Carbs (g)</th>
-                <th className="py-2 px-4 text-left">Fats (g)</th>
-                <th className="py-2 px-4 text-left">Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-              {plans.map((plan) => (
-                <tr
-                  key={plan.id}
-                  className="hover:bg-gray-100 transition duration-200"
-                >
-                  <td className="py-2 px-4">{plan.user?.name}</td>
-                  <td className="py-2 px-4">{plan.calories}</td>
-                  <td className="py-2 px-4">{plan.protein}</td>
-                  <td className="py-2 px-4">{plan.carbs}</td>
-                  <td className="py-2 px-4">{plan.fats}</td>
-                  <td className="py-2 px-4">{plan.notes || "N/A"}</td>
+        {!loading && progress.length > 0 ? (
+          <div className="overflow-x-auto">
+            <table className="w-full bg-white rounded-lg shadow-md overflow-hidden">
+              <thead className="bg-blue-500 text-white">
+                <tr>
+                  <th className="py-2 px-4 text-left">User Name</th>
+                  <th className="py-2 px-4 text-left">Date</th>
+                  <th className="py-2 px-4 text-left">Weight (kg)</th>
+                  <th className="py-2 px-4 text-left">Body Fat (%)</th>
+                  <th className="py-2 px-4 text-left">Notes</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {progress.map((item) => (
+                  <tr
+                    key={item.id}
+                    className="hover:bg-gray-100 transition duration-200"
+                  >
+                    <td className="py-2 px-4">{item.user?.name}</td>
+                    <td className="py-2 px-4">
+                      {new Date(item.date).toLocaleDateString()}
+                    </td>
+                    <td className="py-2 px-4">{item.weight}</td>
+                    <td className="py-2 px-4">{item.body_fat_percentage}</td>
+                    <td className="py-2 px-4">{item.notes || "N/A"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         ) : (
           !loading &&
-          plans.length === 0 && (
+          progress.length === 0 && (
             <p className="text-center text-gray-500 text-lg">
-              No nutrition plans found.
+              No user progress found.
             </p>
           )
         )}
